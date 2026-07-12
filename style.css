@@ -1,0 +1,228 @@
+:root{
+  --navy:#33465C;
+  --navy-soft:#5B6B80;
+  --coral:#F0968A;
+  --peach:#F7C98E;
+  --sand:#FFFAF1;
+  --sand-warm:#F7EDDB;
+  --ink:#2C3A45;
+  --ink-soft:#6B7686;
+  --white:#FFFFFF;
+
+  /* kept for compatibility with older rules below */
+  --sea-deep:var(--navy);
+  --sea:var(--navy-soft);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(240,150,138,0.16), transparent 60%),
+    var(--sand);
+  font-family:'Cairo','Segoe UI',sans-serif;
+  color:var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 16px 56px;
+}
+
+/* Card is centered and width-capped so it looks correct
+   on phones, tablets, laptops and wide desktop monitors alike */
+.card{
+  width:100%;
+  max-width:460px;
+  margin:0 auto;
+  background:var(--white);
+  border-radius:28px;
+  box-shadow:0 30px 60px -25px rgba(51,70,92,0.35), 0 2px 8px rgba(0,0,0,0.04);
+  overflow:hidden;
+  position:relative;
+}
+
+@media (min-width:900px){
+  .card{ max-width:480px; }
+  body{ padding:64px 16px; }
+}
+
+.lang-switch{
+  position:absolute;
+  top:12px;
+  inset-inline-start:12px;
+  z-index:5;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.lang-btn{
+  border:none;
+  background:rgba(255,255,255,0.85);
+  color:var(--navy);
+  font-family:'Cairo',sans-serif;
+  font-weight:700;
+  font-size:11px;
+  padding:5px 9px;
+  border-radius:999px;
+  cursor:pointer;
+  line-height:1.4;
+  transition:background .15s ease, color .15s ease;
+}
+.lang-btn.active{
+  background:var(--navy);
+  color:#fff;
+}
+.lang-btn:hover{ background:#fff; }
+
+.wave-top{
+  height:96px;
+  background:linear-gradient(135deg, var(--navy) 0%, #47607A 35%, var(--coral) 78%, var(--peach) 100%);
+  position:relative;
+}
+.wave-top svg{
+  position:absolute;
+  bottom:-1px; left:0;
+  width:100%; height:36px;
+  display:block;
+}
+
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-top:-52px;
+  position:relative;
+  z-index:2;
+}
+.logo-circle{
+  width:104px;height:104px;
+  border-radius:50%;
+  background:var(--white);
+  box-shadow:0 8px 24px rgba(240,150,138,0.35);
+  display:flex;align-items:center;justify-content:center;
+  padding:8px;
+  border:1px solid rgba(51,70,92,0.08);
+}
+.logo-circle img{
+  width:100%;height:100%;
+  object-fit:contain;
+  border-radius:50%;
+}
+
+.content{
+  padding:18px 30px 32px;
+  text-align:center;
+}
+
+h1{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:26px;
+  line-height:1.25;
+  margin:6px 0 4px;
+  color:var(--navy);
+  letter-spacing:0.2px;
+}
+.en-name{
+  font-size:13px;
+  color:var(--ink-soft);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin:0 0 18px;
+  font-family:'Cairo',sans-serif;
+}
+
+.prompt{
+  font-size:16px;
+  color:var(--ink-soft);
+  margin:0 0 26px;
+  line-height:1.6;
+}
+.prompt strong{color:var(--ink);}
+
+.divider{
+  display:flex;align-items:center;gap:10px;
+  margin:0 0 22px;
+  color:var(--navy-soft);
+  font-size:12px;
+  font-weight:600;
+}
+.divider::before,.divider::after{
+  content:"";
+  flex:1;height:1px;
+  background:linear-gradient(90deg, transparent, var(--peach), transparent);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.review-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:13px 14px;
+  border-radius:16px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:14.5px;
+  color:var(--white);
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  box-shadow:0 6px 14px -6px rgba(0,0,0,0.25);
+}
+.review-btn:active{transform:scale(0.97);}
+@media(hover:hover){
+  .review-btn:hover{transform:translateY(-2px); filter:brightness(1.05);}
+}
+
+.review-btn .icon{
+  width:26px;height:26px;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.review-btn .icon svg{width:100%;height:100%;}
+
+.btn-google{background:#4285F4;}
+.btn-tripadvisor{background:#34E0A1; color:#00382b;}
+.btn-facebook{background:#1877F2;}
+.btn-holidaycheck{background:#FFC629; color:#3A2E00;}
+.btn-zoover{background:#F97316;}
+.btn-tophotels{background:var(--sea-deep);}
+
+.thanks{
+  margin-top:26px;
+  font-size:14px;
+  color:var(--ink-soft);
+}
+.thanks .heart{color:var(--coral);}
+
+.footer-social{
+  margin-top:18px;
+  display:flex;
+  justify-content:center;
+}
+.ig-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#F58529,#DD2A7B 55%,#8134AF);
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  font-size:13px;
+  box-shadow:0 6px 14px -6px rgba(221,42,123,0.5);
+}
+.ig-link svg{width:16px;height:16px;}
+
+.sand-footer{
+  text-align:center;
+  padding:14px 0 4px;
+  font-size:11px;
+  color:#B9AE92;
+  letter-spacing:0.5px;
+}
