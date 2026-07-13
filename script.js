@@ -336,10 +336,10 @@
 
       if (rateSection) rateSection.classList.add("hidden");
 
-      if (averageRating > 3) {
-        if (gridWrap) gridWrap.classList.remove("hidden");
-        if (feedbackWrap) feedbackWrap.classList.add("hidden");
-      } else {
+      // The review-platform grid always shows, regardless of rating.
+      if (gridWrap) gridWrap.classList.remove("hidden");
+
+      if (averageRating <= 3) {
         const breakdownLines = Object.entries(ratingsByCategory).map(
           ([cat, val]) => (CATEGORY_MESSAGE_LABELS[cat] || cat) + ": " + val + "/5"
         );
@@ -353,7 +353,8 @@
         window.open(buildWaLink(WHATSAPP_NUMBER, msg), "_blank", "noopener");
 
         if (feedbackWrap) feedbackWrap.classList.remove("hidden");
-        if (gridWrap) gridWrap.classList.add("hidden");
+      } else {
+        if (feedbackWrap) feedbackWrap.classList.add("hidden");
       }
 
       try {
