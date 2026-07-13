@@ -73,7 +73,7 @@
       copiedText: "Link copied ✓",
       greetMorning: "Good morning ☀️",
       greetEvening: "Good evening 🌙",
-      thanksLow: "Your feedback has been sent, we will reach out to you soon 🙏 We would also love your review on the platforms below 👇",
+      thanksLow: "Your feedback has been sent, we will reach out to you soon 🙏 We would also love your review on the platforms below 👆",
       catReception: "Reception",
       catRooms: "Rooms",
       catFood: "Food & Dining",
