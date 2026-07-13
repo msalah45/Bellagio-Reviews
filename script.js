@@ -3,12 +3,28 @@
   const WHATSAPP_NUMBER = "201069182045";
   const WA_CONTACT_MESSAGE = "Hello, I have a question about my stay at Bellagio Beach Resort.";
 
+  // TODO: paste the Google Apps Script Web App URL here (see setup instructions) to log every
+  // submission into a Google Sheet. Leave as-is to skip sheet logging.
+  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxdAEHVGRxvZRE8m-S4BiKG13HAG0o6ROpr6bEubTZxpNqiSHQk0eJRIJj5JmhqM79O/exec";
+
+  function sendToSheet(payload) {
+    if (!SHEET_WEBHOOK_URL || SHEET_WEBHOOK_URL.indexOf("PASTE_YOUR") !== -1) return;
+    try {
+      fetch(SHEET_WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      }).catch(() => {});
+    } catch (e) {}
+  }
+
   const translations = {
     ar: {
       dir: "rtl",
       name: "بيلاجيو بيتش ريزورت",
       sub: "Bellagio Beach Resort",
-      prompt: "يسعدنا إقامتك معنا 🌊<br>رأيك يفرق معانا كتير، اختار المنصة اللي تريحك وسيبلنا تقييمك",
+      prompt: "يسعدنا إقامتك معنا 🌊<br>رأيك يفرق معانا كتير، قيّم إقامتك في الخطوات البسيطة دي وسيبلنا انطباعك",
       chooseLabel: "اختار منصة التقييم",
       thanks: 'شكرًا لثقتك فينا <span class="heart">♥</span> — تقييمك بيساعدنا نقدملك إقامة أحلى',
       igText: "تابعنا على إنستجرام",
@@ -30,13 +46,20 @@
       catStaff: "خدمة الموظفين",
       catBeach: "الشاطئ والمسبح",
       continueBtn: "متابعة",
-      validationMsg: "من فضلك قيّم عنصر واحد على الأقل"
+      validationMsg: "من فضلك قيّم عنصر واحد على الأقل",
+      roomRequiredMsg: "من فضلك اكتب رقم الغرفة",
+      roomLabel: "رقم الغرفة *",
+      roomPlaceholder: "مثال: 214",
+      commentLabel: "تعليق أو فكرة لتحسين المكان (اختياري)",
+      commentPlaceholder: "اكتب رأيك أو فكرتك هنا...",
+      phoneLabel: "رقم الواتساب (اختياري)",
+      phonePlaceholder: "مثال: 01012345678"
     },
     en: {
       dir: "ltr",
       name: "Bellagio Beach Resort",
       sub: "Beach Resort & Spa",
-      prompt: "We hope you enjoyed your stay with us 🌊<br>Your feedback means a lot — choose the platform that suits you and leave us a review",
+      prompt: "We hope you enjoyed your stay with us 🌊<br>Your feedback means a lot — rate your experience below and let us know how we did",
       chooseLabel: "Choose a review platform",
       thanks: 'Thank you for your trust <span class="heart">♥</span> — your review helps us keep improving your experience',
       igText: "Follow us on Instagram",
@@ -58,13 +81,20 @@
       catStaff: "Staff Service",
       catBeach: "Beach & Pool",
       continueBtn: "Continue",
-      validationMsg: "Please rate at least one item"
+      validationMsg: "Please rate at least one item",
+      roomRequiredMsg: "Please enter your room number",
+      roomLabel: "Room number *",
+      roomPlaceholder: "e.g. 214",
+      commentLabel: "Comment or idea to improve (optional)",
+      commentPlaceholder: "Write your thoughts here...",
+      phoneLabel: "WhatsApp number (optional)",
+      phonePlaceholder: "e.g. 01012345678"
     },
     de: {
       dir: "ltr",
       name: "Bellagio Beach Resort",
       sub: "Strandresort & Spa",
-      prompt: "Wir hoffen, Ihnen hat der Aufenthalt bei uns gefallen 🌊<br>Ihre Meinung ist uns wichtig — wählen Sie die Plattform, die Ihnen am besten passt, und hinterlassen Sie uns eine Bewertung",
+      prompt: "Wir hoffen, Ihnen hat der Aufenthalt bei uns gefallen 🌊<br>Ihre Meinung ist uns wichtig — bewerten Sie unten Ihre Erfahrung und lassen Sie uns wissen, wie wir waren",
       chooseLabel: "Bewertungsplattform auswählen",
       thanks: 'Vielen Dank für Ihr Vertrauen <span class="heart">♥</span> — Ihre Bewertung hilft uns, Ihr Erlebnis stetig zu verbessern',
       igText: "Folgen Sie uns auf Instagram",
@@ -86,13 +116,20 @@
       catStaff: "Personal-Service",
       catBeach: "Strand & Pool",
       continueBtn: "Weiter",
-      validationMsg: "Bitte bewerten Sie mindestens einen Punkt"
+      validationMsg: "Bitte bewerten Sie mindestens einen Punkt",
+      roomRequiredMsg: "Bitte geben Sie Ihre Zimmernummer ein",
+      roomLabel: "Zimmernummer *",
+      roomPlaceholder: "z. B. 214",
+      commentLabel: "Kommentar oder Verbesserungsidee (optional)",
+      commentPlaceholder: "Schreiben Sie hier Ihre Gedanken...",
+      phoneLabel: "WhatsApp-Nummer (optional)",
+      phonePlaceholder: "z. B. 01012345678"
     },
     ru: {
       dir: "ltr",
       name: "Bellagio Beach Resort",
       sub: "Пляжный курорт и спа",
-      prompt: "Надеемся, вам понравился отдых у нас 🌊<br>Ваше мнение много для нас значит — выберите платформу и оставьте отзыв",
+      prompt: "Надеемся, вам понравился отдых у нас 🌊<br>Ваше мнение много для нас значит — оцените свой опыт ниже и расскажите, как у нас получилось",
       chooseLabel: "Выберите платформу для отзыва",
       thanks: 'Спасибо за доверие <span class="heart">♥</span> — ваш отзыв помогает нам становиться лучше',
       igText: "Подписывайтесь на нас в Instagram",
@@ -114,13 +151,20 @@
       catStaff: "Обслуживание персонала",
       catBeach: "Пляж и бассейн",
       continueBtn: "Продолжить",
-      validationMsg: "Пожалуйста, оцените хотя бы один пункт"
+      validationMsg: "Пожалуйста, оцените хотя бы один пункт",
+      roomRequiredMsg: "Пожалуйста, укажите номер комнаты",
+      roomLabel: "Номер комнаты *",
+      roomPlaceholder: "напр. 214",
+      commentLabel: "Комментарий или идея для улучшения (необязательно)",
+      commentPlaceholder: "Напишите здесь свои мысли...",
+      phoneLabel: "Номер WhatsApp (необязательно)",
+      phonePlaceholder: "напр. 01012345678"
     },
     zh: {
       dir: "ltr",
       name: "Bellagio Beach Resort",
       sub: "海滩度假村与水疗中心",
-      prompt: "希望您在这里度过愉快的假期 🌊<br>您的意见对我们非常重要 — 请选择您喜欢的平台，给我们留下评价",
+      prompt: "希望您在这里度过愉快的假期 🌊<br>您的意见对我们非常重要 — 请在下方为您的体验评分，让我们知道我们做得如何",
       chooseLabel: "选择评价平台",
       thanks: '感谢您的信任 <span class="heart">♥</span> — 您的评价帮助我们做得更好',
       igText: "在 Instagram 上关注我们",
@@ -142,7 +186,14 @@
       catStaff: "员工服务",
       catBeach: "海滩与泳池",
       continueBtn: "继续",
-      validationMsg: "请至少评价一项"
+      validationMsg: "请至少评价一项",
+      roomRequiredMsg: "请填写房间号",
+      roomLabel: "房间号 *",
+      roomPlaceholder: "例如：214",
+      commentLabel: "评论或改进建议（可选）",
+      commentPlaceholder: "请在此写下您的想法...",
+      phoneLabel: "WhatsApp 号码（可选）",
+      phonePlaceholder: "例如：01012345678"
     }
   };
 
@@ -240,19 +291,67 @@
 
   if (continueBtn) {
     continueBtn.addEventListener("click", () => {
+      const roomEl = document.getElementById("roomNumber");
+      const phoneEl = document.getElementById("phoneNumber");
+      const commentEl = document.getElementById("generalComment");
+      const room = roomEl ? roomEl.value.trim() : "";
+      const phone = phoneEl ? phoneEl.value.trim() : "";
+      const comment = commentEl ? commentEl.value.trim() : "";
+
+      if (!room) {
+        if (rateValidation) {
+          rateValidation.textContent = translations[currentLang].roomRequiredMsg;
+          rateValidation.classList.remove("hidden");
+        }
+        if (roomEl) roomEl.focus();
+        return;
+      }
+
       const values = Object.values(ratingsByCategory);
       if (values.length === 0) {
-        if (rateValidation) rateValidation.classList.remove("hidden");
+        if (rateValidation) {
+          rateValidation.textContent = translations[currentLang].validationMsg;
+          rateValidation.classList.remove("hidden");
+        }
         return;
       }
 
       averageRating = values.reduce((a, b) => a + b, 0) / values.length;
+
+      const payload = {
+        room: room,
+        phone: phone,
+        reception: ratingsByCategory.reception || "",
+        rooms: ratingsByCategory.rooms || "",
+        food: ratingsByCategory.food || "",
+        cleanliness: ratingsByCategory.cleanliness || "",
+        staff: ratingsByCategory.staff || "",
+        beach: ratingsByCategory.beach || "",
+        average: averageRating.toFixed(1),
+        comment: comment,
+        lang: currentLang,
+        timestamp: new Date().toISOString()
+      };
+      sendToSheet(payload);
+
       if (rateSection) rateSection.classList.add("hidden");
 
-      if (averageRating >= 4) {
+      if (averageRating > 3) {
         if (gridWrap) gridWrap.classList.remove("hidden");
         if (feedbackWrap) feedbackWrap.classList.add("hidden");
       } else {
+        const breakdownLines = Object.entries(ratingsByCategory).map(
+          ([cat, val]) => (CATEGORY_MESSAGE_LABELS[cat] || cat) + ": " + val + "/5"
+        );
+        const msg =
+          "Bellagio Beach Resort - Guest Feedback\n" +
+          "Room: " + (room || "-") + "\n" +
+          "Guest WhatsApp: " + (phone || "-") + "\n" +
+          breakdownLines.join("\n") + "\n" +
+          "Average: " + averageRating.toFixed(1) + "/5\n" +
+          "Comment: " + (comment || "-");
+        window.open(buildWaLink(WHATSAPP_NUMBER, msg), "_blank", "noopener");
+
         if (feedbackWrap) feedbackWrap.classList.remove("hidden");
         if (gridWrap) gridWrap.classList.add("hidden");
       }
@@ -267,32 +366,6 @@
   // --- Low-rating feedback -> WhatsApp ---
   function buildWaLink(number, message) {
     return "https://wa.me/" + number + "?text=" + encodeURIComponent(message);
-  }
-
-  const waSendBtn = document.getElementById("waSendBtn");
-  if (waSendBtn) {
-    waSendBtn.addEventListener("click", () => {
-      const textEl = document.getElementById("feedbackText");
-      const text = textEl ? textEl.value.trim() : "";
-
-      const breakdownLines = Object.entries(ratingsByCategory).map(
-        ([cat, val]) => (CATEGORY_MESSAGE_LABELS[cat] || cat) + ": " + val + "/5"
-      );
-      const breakdown = breakdownLines.length ? breakdownLines.join("\n") : "-";
-      const avgText = averageRating !== null ? averageRating.toFixed(1) + "/5" : "-";
-
-      const msg =
-        "Bellagio Beach Resort - Guest Feedback\n" +
-        breakdown + "\n" +
-        "Average: " + avgText + "\n" +
-        "Message: " + (text || "-");
-      window.open(buildWaLink(WHATSAPP_NUMBER, msg), "_blank", "noopener");
-
-      if (feedbackWrap) {
-        feedbackWrap.innerHTML =
-          '<p class="feedback-sent">' + translations[currentLang].thanksLow + "</p>";
-      }
-    });
   }
 
   // --- Floating WhatsApp contact button + utility-row WhatsApp button ---

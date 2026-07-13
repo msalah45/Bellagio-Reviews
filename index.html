@@ -39,11 +39,21 @@
       <h1 data-i18n="name">بيلاجيو بيتش ريزورت</h1>
       <p class="en-name" data-i18n="sub">Bellagio Beach Resort</p>
 
-      <p class="prompt" data-i18n="prompt">يسعدنا إقامتك معنا 🌊<br>رأيك يفرق معانا كتير، اختار المنصة اللي تريحك وسيبلنا تقييمك</p>
+      <p class="prompt" data-i18n="prompt">يسعدنا إقامتك معنا 🌊<br>رأيك يفرق معانا كتير، قيّم إقامتك في الخطوات البسيطة دي وسيبلنا انطباعك</p>
 
       <!-- Step 1: rate each part of the stay -->
       <div class="rate-section" id="rateSection">
         <p class="rate-label" data-i18n="rateLabel">قيّم إقامتك معانا</p>
+
+        <div class="room-field">
+          <label class="room-label" for="roomNumber" data-i18n="roomLabel">رقم الغرفة *</label>
+          <input type="text" id="roomNumber" class="room-input" inputmode="numeric" required data-i18n-ph="roomPlaceholder" placeholder="مثال: 214">
+        </div>
+
+        <div class="room-field">
+          <label class="room-label" for="phoneNumber" data-i18n="phoneLabel">رقم الواتساب (اختياري)</label>
+          <input type="tel" id="phoneNumber" class="room-input" inputmode="tel" data-i18n-ph="phonePlaceholder" placeholder="مثال: 01012345678">
+        </div>
 
         <div class="rate-categories" id="rateCategories">
           <div class="rate-row" data-cat="reception">
@@ -111,6 +121,11 @@
               <button class="star" type="button" data-value="5" aria-label="5">★</button>
             </div>
           </div>
+        </div>
+
+        <div class="comment-field">
+          <label class="comment-label" for="generalComment" data-i18n="commentLabel">تعليق أو فكرة لتحسين المكان (اختياري)</label>
+          <textarea id="generalComment" class="feedback-text" data-i18n-ph="commentPlaceholder" placeholder="اكتب رأيك أو فكرتك هنا..."></textarea>
         </div>
 
         <p class="rate-validation hidden" id="rateValidation" data-i18n="validationMsg">من فضلك قيّم عنصر واحد على الأقل</p>
@@ -184,11 +199,9 @@
         </div>
       </div>
 
-      <!-- Step 2b: shown for 1-3 stars -->
+      <!-- Step 2b: shown after submitting a low average rating -->
       <div class="feedback-wrap hidden" id="feedbackWrap">
-        <p class="feedback-label" data-i18n="feedbackLabel">نأسف إذا مكانتش تجربتك زي ما كنا نتمنى، احكيلنا التفاصيل عشان نصلحها</p>
-        <textarea id="feedbackText" class="feedback-text" data-i18n-ph="feedbackPlaceholder" placeholder="اكتب ملاحظتك هنا..."></textarea>
-        <button class="wa-send-btn" id="waSendBtn" type="button" data-i18n="sendWhatsapp">إرسال الملاحظة عبر واتساب</button>
+        <p class="feedback-sent" data-i18n="thanksLow">شكرًا على وقتك، هنتواصل معاك في أقرب وقت 🙏</p>
       </div>
 
       <p class="thanks" data-i18n="thanks">شكرًا لثقتك فينا <span class="heart">♥</span> — تقييمك بيساعدنا نقدملك إقامة أحلى</p>
