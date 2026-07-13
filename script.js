@@ -38,7 +38,7 @@
       copiedText: "تم نسخ الرابط ✓",
       greetMorning: "صباح الخير ☀️",
       greetEvening: "مساء الخير 🌙",
-      thanksLow: "شكرًا على وقتك، هنتواصل معاك في أقرب وقت 🙏",
+      thanksLow: "تم إرسال ملاحظتك، هنتواصل معاك في أقرب وقت 🙏 وحابين نشوف رأيك في المنصات تحت كمان 👇",
       catReception: "الاستقبال",
       catRooms: "الغرف",
       catFood: "الأكل والمطاعم",
@@ -73,7 +73,7 @@
       copiedText: "Link copied ✓",
       greetMorning: "Good morning ☀️",
       greetEvening: "Good evening 🌙",
-      thanksLow: "Thank you for your time, we'll reach out to you soon 🙏",
+      thanksLow: "Your feedback has been sent, we will reach out to you soon 🙏 We would also love your review on the platforms below 👇",
       catReception: "Reception",
       catRooms: "Rooms",
       catFood: "Food & Dining",
@@ -108,7 +108,7 @@
       copiedText: "Link kopiert ✓",
       greetMorning: "Guten Morgen ☀️",
       greetEvening: "Guten Abend 🌙",
-      thanksLow: "Vielen Dank für Ihre Zeit, wir melden uns bald bei Ihnen 🙏",
+      thanksLow: "Ihr Feedback wurde gesendet, wir melden uns bald bei Ihnen 🙏 Wir würden uns auch über Ihre Bewertung auf den Plattformen unten freuen 👇",
       catReception: "Empfang",
       catRooms: "Zimmer",
       catFood: "Essen & Restaurants",
@@ -143,7 +143,7 @@
       copiedText: "Ссылка скопирована ✓",
       greetMorning: "Доброе утро ☀️",
       greetEvening: "Добрый вечер 🌙",
-      thanksLow: "Спасибо за ваше время, мы скоро с вами свяжемся 🙏",
+      thanksLow: "Ваш отзыв отправлен, мы скоро с вами свяжемся 🙏 Будем рады вашей оценке на платформах ниже 👇",
       catReception: "Ресепшн",
       catRooms: "Номера",
       catFood: "Питание и рестораны",
@@ -178,7 +178,7 @@
       copiedText: "链接已复制 ✓",
       greetMorning: "早上好 ☀️",
       greetEvening: "晚上好 🌙",
-      thanksLow: "感谢您的宝贵时间，我们会尽快与您联系 🙏",
+      thanksLow: "您的反馈已发送，我们会尽快与您联系 🙏 也希望您能在下方平台留下评价 👇",
       catReception: "前台",
       catRooms: "客房",
       catFood: "餐饮",
@@ -353,6 +353,14 @@
         window.open(buildWaLink(WHATSAPP_NUMBER, msg), "_blank", "noopener");
 
         if (feedbackWrap) feedbackWrap.classList.remove("hidden");
+
+        if (gridWrap) {
+          gridWrap.classList.add("attention");
+          setTimeout(() => {
+            gridWrap.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 400);
+          setTimeout(() => gridWrap.classList.remove("attention"), 4000);
+        }
       } else {
         if (feedbackWrap) feedbackWrap.classList.add("hidden");
       }
